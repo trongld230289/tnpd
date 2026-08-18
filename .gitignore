@@ -1,3 +1,7 @@
 Thumbs.db
 .DS_Store
 .playwright-mcp/
+
+# Anh goc tu may anh / flycam - chi dung ban da nen trong assets/
+/DJI_*.jpg
+/DSC*.jpg

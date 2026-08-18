@@ -31,18 +31,36 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  /* ---------- Background ---------- */
+  /* ---------- Background: doi anh theo doan lich trinh ---------- */
   .bg{
-    position:fixed;inset:0;z-index:-3;
+    position:fixed;inset:0;z-index:-5;
     background:url('assets/bg.jpg') center/cover no-repeat;
     transform:scale(1.04);
   }
-  .bg::after{
-    content:'';position:absolute;inset:0;
+  /* Anh dem / anh sang chong len anh mac dinh, crossfade khi scroll */
+  .bg-alt{
+    position:fixed;inset:0;z-index:-4;opacity:0;
+    background-position:center;background-size:cover;background-repeat:no-repeat;
+    transform:scale(1.04);
+    transition:opacity 1.3s ease;
+  }
+  .bg-alt.on{opacity:1}
+  #bgNight{background-image:url('assets/night.jpg')}
+  #bgDay{background-image:url('assets/morning.jpg')}
+  @media (max-width:700px){
+    #bgNight{background-image:url('assets/night-sm.jpg')}
+    #bgDay{background-image:url('assets/morning-sm.jpg')}
+  }
+  /* Man toi dung chung cho moi anh nen, giup chu luon doc duoc */
+  .bg-shade{
+    position:fixed;inset:0;z-index:-3;pointer-events:none;
+    transition:opacity .9s ease;
     background:
       radial-gradient(130% 90% at 50% 8%, rgba(11,20,16,0) 0%, rgba(11,20,16,.28) 55%, rgba(11,20,16,.6) 100%),
       linear-gradient(180deg, rgba(11,20,16,.05) 0%, rgba(11,20,16,.34) 55%, rgba(11,20,16,.72) 100%);
   }
+  /* Anh dem von da toi san, nhe man di cho thay ro dai ngan ha */
+  .bg-shade.dim{opacity:.5}
   /* ---------- Thoi tiet: nang -> mua -> may bay ---------- */
   .weather{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
   .wx{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease}
@@ -360,6 +378,9 @@
 </head>
 <body>
 <div class="bg"></div>
+<div class="bg-alt" id="bgNight" aria-hidden="true"></div>
+<div class="bg-alt" id="bgDay" aria-hidden="true"></div>
+<div class="bg-shade" id="bgShade" aria-hidden="true"></div>
 <div class="weather" id="weather" aria-hidden="true">
   <div class="wx wx-sun" id="wxSun"><span class="rays"></span></div>
   <div class="wx wx-rain" id="wxRain"><span class="drops"></span><span class="drops d2"></span></div>
@@ -398,7 +419,7 @@
     <article class="day reveal">
       <div class="day-head">
         <span class="day-tag">Ngày 0</span>
-        <h3>☀️ Tối thứ 6 — 28/08</h3>
+        <h3>🌙 Tối thứ 6 — 28/08</h3>
         <span class="sub">Tập trung &amp; xuất phát</span>
       </div>
       <ul class="steps">
@@ -552,6 +573,27 @@
       if (wxFront) wxFront.classList.toggle('on', name === 'cloud');
     }
 
+    // Anh nen doi theo doan: dem (Ngay 0) -> sang (Ngay 1, 2)
+    const bgNight = document.getElementById('bgNight');
+    const bgDay   = document.getElementById('bgDay');
+    const bgShade = document.getElementById('bgShade');
+    let bgNow = null;
+    function setScene(name) {
+      if (name === bgNow) return;
+      bgNow = name;
+      if (bgNight) bgNight.classList.toggle('on', name === 'night');
+      if (bgDay)   bgDay.classList.toggle('on', name === 'day');
+      if (bgShade) bgShade.classList.toggle('dim', name === 'night');
+    }
+
+    // Tai san 2 anh nen khi trang da on dinh, tranh giat khi doi canh
+    function preloadScenes() {
+      const small = window.matchMedia('(max-width:700px)').matches;
+      ['night', 'morning'].forEach(n => {
+        new Image().src = 'assets/' + n + (small ? '-sm' : '') + '.jpg';
+      });
+    }
+
     // Moi ngay mot cot moc tren duong mon
     const nodes = days.map(() => {
       const n = document.createElement('span');
@@ -582,7 +624,7 @@
 
       const inView = r.top < vh && r.bottom > 0;
       hiker.classList.toggle('on', inView);
-      if (!inView) { setWeather(null); return; }
+      if (!inView) { setWeather(null); setScene(null); return; }
 
       // Diem ngam o 55% chieu cao man hinh
       const focus = vh * 0.55;
@@ -595,7 +637,26 @@
 
       nodes.forEach((n, i) => n.classList.toggle('hit', y >= nodeAt[i] - 2));
 
-      setWeather(p < 0.34 ? 'sun' : p < 0.68 ? 'rain' : 'cloud');
+      // Dang o ngay nao: moc cuoi cung ma nguoi di bo da di qua
+      let active = -1;
+      for (let i = 0; i < nodeAt.length; i++) if (y >= nodeAt[i] - 2) active = i;
+
+      if (active <= 0) {
+        // Ngay 0 la buoi toi: anh troi sao, khong phu hieu ung thoi tiet
+        setScene(active === 0 ? 'night' : null);
+        setWeather(null);
+      } else {
+        setScene('day');
+        if (active === 1) {
+          // Ngay 1: sang nang, chieu do mua
+          const span = nodeAt[2] - nodeAt[1];
+          const local = span > 0 ? (y - nodeAt[1]) / span : 0;
+          setWeather(local < 0.5 ? 'sun' : 'rain');
+        } else {
+          // Ngay 2: sang som, may la la tren bien may
+          setWeather('cloud');
+        }
+      }
 
       // Nhun chan khi dang di chuyen
       if (!reduced && Math.abs(p - lastP) > 0.0004) {
@@ -621,7 +682,7 @@
     addEventListener('resize', onResize);
     // Cac the .day hien dan qua .reveal nen kich thuoc co the doi sau khi load
     if (window.ResizeObserver) new ResizeObserver(onResize).observe(trail);
-    addEventListener('load', onResize);
+    addEventListener('load', () => { onResize(); preloadScenes(); });
   })();
 </script>
 </body>
