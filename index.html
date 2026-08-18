@@ -51,6 +51,8 @@
     #bgNight{background-image:url('assets/night-sm.jpg')}
     #bgDay{background-image:url('assets/morning-sm.jpg')}
   }
+  /* Anh buoi sang sang hon anh goc, phu them mot lop mong cho chu khoi chim */
+  #bgDay::after{content:'';position:absolute;inset:0;background:rgba(11,20,16,.20)}
   /* Man toi dung chung cho moi anh nen, giup chu luon doc duoc */
   .bg-shade{
     position:fixed;inset:0;z-index:-3;pointer-events:none;
@@ -624,7 +626,13 @@
 
       const inView = r.top < vh && r.bottom > 0;
       hiker.classList.toggle('on', inView);
-      if (!inView) { setWeather(null); setScene(null); return; }
+      if (!inView) {
+        setWeather(null);
+        // Da cuon qua het timeline thi giu luon anh buoi sang,
+        // chua toi timeline thi van la anh nen dau tien
+        setScene(r.bottom <= 0 ? 'day' : null);
+        return;
+      }
 
       // Diem ngam o 55% chieu cao man hinh
       const focus = vh * 0.55;
