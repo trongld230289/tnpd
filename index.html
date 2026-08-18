@@ -299,6 +299,21 @@
     -webkit-box-decoration-break:clone;box-decoration-break:clone;
   }
 
+  /* ---------- BBQ menu chips ---------- */
+  .menu{
+    list-style:none;display:flex;flex-wrap:wrap;gap:8px;
+    margin:12px 0 2px;padding:0;
+  }
+  ul.steps ul.menu li{
+    display:inline-flex;align-items:center;gap:7px;
+    position:static;padding:7px 12px;border-bottom:0;border-radius:999px;
+    font-size:.9rem;font-weight:500;color:#ffe6ab;
+    background:rgba(246,196,83,.11);border:1px solid rgba(246,196,83,.3);
+    line-height:1.5;
+  }
+  ul.steps ul.menu li::before{display:none}
+  .menu li i{font-style:normal;font-size:1.05rem;line-height:1}
+
   /* ---------- Price ---------- */
   .price-card{
     border:1px solid var(--line);border-radius:22px;background:var(--glass);
@@ -390,6 +405,7 @@
     .prep-item{padding:18px 16px}
     ul.steps li{padding-left:22px}
     .hl{padding:2px 6px;font-size:.95em}
+    ul.steps ul.menu li{padding:6px 10px;font-size:.85rem}
   }
 </style>
 </head>
@@ -459,7 +475,15 @@
         <li>Lếch thêm 2 con dốc nữa sẽ tới đồi cỏ, leo thêm 1 con dốc sẽ tới cột mốc 3 tỉnh <b style="margin:0 0 0 4px">Lâm Đồng – Ninh Thuận – Bình Thuận</b>.</li>
         <li><b>12h</b> Ăn trưa.</li>
         <li><b>13h–16h30</b> Trekking tới bãi cắm trại.</li>
-        <li><b>17h30</b> Nghỉ ngơi, hạ trại, chuẩn bị ăn tối, <span class="hl">🔥 BBQ</span> — bò xào, heo nướng tảng, đùi dê quay, rau trộn, khoai lang nướng.</li>
+        <li><b>17h30</b> Nghỉ ngơi, hạ trại, chuẩn bị ăn tối, <span class="hl">🔥 BBQ</span>.
+          <ul class="menu">
+            <li><i>🥩</i>Bò xào</li>
+            <li><i>🐖</i>Heo nướng tảng</li>
+            <li><i>🍖</i>Đùi dê quay</li>
+            <li><i>🥗</i>Rau trộn</li>
+            <li><i>🍠</i>Khoai lang nướng</li>
+          </ul>
+        </li>
         <li>Mệt thì ngủ. 😴</li>
       </ul>
     </article>
@@ -495,7 +519,7 @@
       <ul class="includes">
         <li>Xe giường nằm + gửi đồ chở ra trước + xe ôm ở bìa rừng.</li>
         <li>Xe thồ vận chuyển vật dụng của đoàn (lều trại, túi ngủ, đồ ăn, nước uống…).</li>
-        <li><span>Tất cả bữa ăn, nước uống, trái cây dọc hành trình + BBQ (bò xào, heo nướng tảng, đùi dê quay, rau trộn, khoai lang nướng) + <b>cơm trưa hải sản ngày về</b>.</span></li>
+        <li><span>Tất cả bữa ăn, nước uống, trái cây dọc hành trình + BBQ (🥩 bò xào, 🐖 heo nướng tảng, 🍖 đùi dê quay, 🥗 rau trộn, 🍠 khoai lang nướng) + <b>cơm trưa hải sản ngày về</b>.</span></li>
         <li>Lều trại + cách nhiệt + túi ngủ cho mỗi cá nhân.</li>
         <li>Dẫn đoàn + porter hỗ trợ cho đoàn.</li>
       </ul>
