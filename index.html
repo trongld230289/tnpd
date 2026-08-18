@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trekking Tà Năng – Phan Dũng | 28/08 – 30/08</title>
+<meta name="description" content="Lịch trình trekking Tà Năng – Phan Dũng 3 ngày 2 đêm, xuất phát tối 28/08, về Sài Gòn 30/08. Cột mốc 3 tỉnh Lâm Đồng – Ninh Thuận – Bình Thuận.">
+<meta name="theme-color" content="#0b1410">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛰️</text></svg>">
+<style>
+  :root{
+    --ink:#0b1410;
+    --paper:#f3f6f2;
+    --moss:#7dd3a0;
+    --moss-deep:#2f9e6b;
+    --sun:#f6c453;
+    --line:rgba(255,255,255,.14);
+    --glass:rgba(12,22,18,.55);
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--paper);
+    background:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Background ---------- */
+  .bg{
+    position:fixed;inset:0;z-index:-2;
+    background:url('assets/bg.jpg') center/cover no-repeat;
+    transform:scale(1.04);
+  }
+  .bg::after{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(11,20,16,.15) 0%, rgba(11,20,16,.75) 55%, rgba(11,20,16,.94) 100%),
+      linear-gradient(180deg, rgba(11,20,16,.25) 0%, rgba(11,20,16,.88) 70%, #0b1410 100%);
+  }
+  .grain{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:90px 0 60px;text-align:center;position:relative;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;margin:0 auto 26px;
+    padding:8px 16px;border:1px solid var(--line);border-radius:999px;
+    background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+    font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+    color:#dff3e6;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 12px var(--moss)}
+  h1{
+    font-size:clamp(2.5rem,9vw,5.4rem);font-weight:800;line-height:.98;
+    letter-spacing:-.03em;text-transform:uppercase;
+    text-shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  h1 .thin{display:block;font-weight:300;font-size:.36em;letter-spacing:.42em;
+    text-transform:uppercase;margin-bottom:.9em;color:var(--moss);text-shadow:none}
+  .lede{max-width:38ch;margin:26px auto 0;font-weight:300;font-size:1.06rem;color:#d7e3da}
+  .dates{
+    margin:34px auto 0;display:flex;flex-wrap:wrap;justify-content:center;
+    gap:10px 12px;
+  }
+  .chip{
+    padding:9px 18px;border-radius:999px;font-size:.9rem;font-weight:600;
+    border:1px solid var(--line);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);
+  }
+  .chip.hot{background:var(--sun);color:#2a1d00;border-color:transparent}
+  .scroll-cue{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:#9fb3a6;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .scroll-cue span.bar{width:1px;height:46px;background:linear-gradient(var(--moss),transparent);animation:drop 2.2s infinite}
+  @keyframes drop{0%{opacity:0;transform:scaleY(.2)}40%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+
+  /* ---------- Sections ---------- */
+  section{padding:72px 0}
+  .sec-head{margin-bottom:38px}
+  .sec-num{font-size:.72rem;letter-spacing:.28em;color:var(--moss);font-weight:600;text-transform:uppercase}
+  .sec-head h2{
+    font-size:clamp(1.7rem,4.6vw,2.5rem);font-weight:800;letter-spacing:-.02em;
+    margin-top:8px;line-height:1.15;
+  }
+  .sec-head p{color:#b9c9be;font-weight:300;margin-top:10px;max-width:52ch}
+
+  /* ---------- Timeline ---------- */
+  .day{
+    position:relative;margin-bottom:22px;border:1px solid var(--line);border-radius:20px;
+    background:var(--glass);backdrop-filter:blur(16px);overflow:hidden;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
+  }
+  .day-head{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:22px 24px 18px;border-bottom:1px solid var(--line);
+    background:linear-gradient(90deg,rgba(125,211,160,.14),transparent 65%);
+  }
+  .day-tag{
+    font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:#0b1410;background:var(--moss);padding:5px 11px;border-radius:6px;
+  }
+  .day-head h3{font-size:1.16rem;font-weight:600}
+  .day-head .sub{font-size:.86rem;color:#a9bcae;font-weight:300;margin-left:auto}
+  ul.steps{list-style:none;padding:8px 24px 24px}
+  ul.steps li{
+    position:relative;padding:13px 0 13px 26px;border-bottom:1px dashed rgba(255,255,255,.09);
+    font-weight:300;font-size:.98rem;color:#e4ece6;
+  }
+  ul.steps li:last-child{border-bottom:0}
+  ul.steps li::before{
+    content:'';position:absolute;left:4px;top:22px;width:7px;height:7px;border-radius:50%;
+    background:var(--moss);box-shadow:0 0 0 4px rgba(125,211,160,.15);
+  }
+  ul.steps li b{color:#fff;font-weight:600;margin-right:6px}
+  .note{color:var(--sun);font-style:italic}
+
+  /* ---------- Price ---------- */
+  .price-card{
+    border:1px solid var(--line);border-radius:22px;background:var(--glass);
+    backdrop-filter:blur(16px);padding:34px 28px;text-align:center;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
+  }
+  .price-label{font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:#a9bcae}
+  .price{
+    font-size:clamp(2.4rem,8vw,3.6rem);font-weight:800;letter-spacing:-.03em;
+    color:var(--sun);margin:6px 0 2px;
+  }
+  .price small{font-size:.32em;font-weight:400;letter-spacing:.06em;color:#d7e3da;display:block;margin-top:4px}
+  .includes{
+    list-style:none;margin-top:26px;display:grid;gap:12px;text-align:left;
+    grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
+  }
+  .includes li{
+    display:flex;gap:11px;align-items:flex-start;padding:14px 16px;border-radius:14px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+    font-size:.93rem;font-weight:300;color:#e4ece6;
+  }
+  .includes li::before{content:'✓';color:var(--moss);font-weight:800;flex-shrink:0}
+
+  /* ---------- Prep ---------- */
+  .prep{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+  .prep-item{
+    border:1px solid var(--line);border-radius:16px;padding:20px;
+    background:rgba(12,22,18,.5);backdrop-filter:blur(12px);
+  }
+  .prep-item .ico{font-size:1.5rem;display:block;margin-bottom:10px}
+  .prep-item h4{font-size:.98rem;font-weight:600;margin-bottom:6px}
+  .prep-item p{font-size:.9rem;font-weight:300;color:#c3d2c8}
+
+  .callout{
+    margin-top:34px;border-left:3px solid var(--sun);border-radius:0 16px 16px 0;
+    padding:20px 24px;background:linear-gradient(90deg,rgba(246,196,83,.14),rgba(246,196,83,0));
+    font-weight:300;
+  }
+  .callout b{font-weight:600;color:var(--sun)}
+
+  footer{
+    padding:60px 0 46px;text-align:center;border-top:1px solid var(--line);
+    color:#8fa295;font-size:.85rem;font-weight:300;
+  }
+  footer .big{
+    display:block;font-size:1.5rem;font-weight:800;color:var(--paper);
+    letter-spacing:-.02em;margin-bottom:10px;
+  }
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .scroll-cue span.bar{animation:none}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:620px){
+    section{padding:56px 0}
+    .day-head .sub{margin-left:0;width:100%}
+    ul.steps{padding:6px 18px 18px}
+    .day-head{padding:18px 18px 16px}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="grain"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Cung đường huyền thoại · 3 ngày 2 đêm</div>
+    <h1><span class="thin">Trekking</span>Tà Năng<br>Phan Dũng</h1>
+    <p class="lede">Băng rừng, lội suối, chinh phục cột mốc 3 tỉnh Lâm Đồng – Ninh Thuận – Bình Thuận.</p>
+    <div class="dates">
+      <span class="chip">🚌 Xuất phát: Tối 28/08</span>
+      <span class="chip">🏁 Về SG: 30/08</span>
+      <span class="chip hot">2.350.000 VNĐ / người</span>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Lịch trình</span><span class="bar"></span></div>
+</header>
+
+<main>
+  <section class="wrap" id="lichtrinh">
+    <div class="sec-head reveal">
+      <div class="sec-num">01 — Hành trình</div>
+      <h2>Lịch trình chi tiết</h2>
+      <p>Giờ giấc có thể xê dịch đôi chút tuỳ tình hình thời tiết và sức khoẻ của đoàn.</p>
+    </div>
+
+    <article class="day reveal">
+      <div class="day-head">
+        <span class="day-tag">Ngày 0</span>
+        <h3>☀️ Tối thứ 6 — 28/08</h3>
+        <span class="sub">Tập trung &amp; xuất phát</span>
+      </div>
+      <ul class="steps">
+        <li><b>22h</b> Tập trung sân khấu kịch Phú Nhuận, 70–72 Nguyễn Văn Trỗi, phường 8, quận Phú Nhuận.</li>
+        <li><b>22h30</b> Xuất phát.</li>
+        <li>Rước thêm ở Hàng Xanh hoặc Ngã 4 Thủ Đức.</li>
+      </ul>
+    </article>
+
+    <article class="day reveal">
+      <div class="day-head">
+        <span class="day-tag">Ngày 1</span>
+        <h3>☀️ Thứ 7 — 29/08</h3>
+        <span class="sub">Chinh phục cột mốc 3 tỉnh</span>
+      </div>
+      <ul class="steps">
+        <li><b>5h–6h</b> Ăn sáng tại chợ Đà Loan — hủ tiếu, phở.</li>
+        <li><b>6h–8h</b> Di chuyển vào điểm trekking. Mỗi bạn sẽ được phát áo mưa và 1.5L nước.</li>
+        <li><b>8h30</b> Trekking qua các đoạn đường bằng phẳng, 4 con suối có độ thử thách nhẹ, leo lên hết dốc 1 <span class="note">(mình hay chọc là dốc DM, leo xong chỉ muốn DM ^^)</span> và ngồi thở.</li>
+        <li>Lếch thêm 2 con dốc nữa sẽ tới đồi cỏ, leo thêm 1 con dốc sẽ tới cột mốc 3 tỉnh <b style="margin:0 0 0 4px">Lâm Đồng – Ninh Thuận – Bình Thuận</b>.</li>
+        <li><b>12h</b> Ăn trưa.</li>
+        <li><b>13h–16h30</b> Trekking tới bãi cắm trại.</li>
+        <li><b>17h30</b> Nghỉ ngơi, hạ trại, chuẩn bị ăn tối, BBQ.</li>
+        <li>Mệt thì ngủ. 😴</li>
+      </ul>
+    </article>
+
+    <article class="day reveal">
+      <div class="day-head">
+        <span class="day-tag">Ngày 2</span>
+        <h3>☀️ Chủ Nhật — 30/08</h3>
+        <span class="sub">Xuyên rừng Phan Dũng &amp; về SG</span>
+      </div>
+      <ul class="steps">
+        <li><b>5h–6h</b> Dậy sớm ăn sáng, ngắm bình minh.</li>
+        <li><b>6h40</b> Thu dọn "chiến trường". Lấy thêm nước suối, ít nhất 500ml.</li>
+        <li><b>7h30</b> Trekking theo hướng đồi lính để vào rừng Phan Dũng.</li>
+        <li><b>10h–11h</b> Ăn nhẹ bên suối.</li>
+        <li><b>11h</b> Xuất phát ra tới bìa rừng.</li>
+        <li><b>13h</b> Xe ôm rước ở bìa rừng.</li>
+        <li><b>14h</b> Tắm suối — ăn trưa, no thì về.</li>
+        <li><b>23h59</b> Có mặt Sài Gòn.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="wrap" id="chiphi">
+    <div class="sec-head reveal">
+      <div class="sec-num">02 — Chi phí</div>
+      <h2>Trọn gói cho chuyến đi</h2>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-label">Chi phí cho chuyến đi</div>
+      <div class="price">2.350.000<small>VNĐ / người</small></div>
+      <ul class="includes">
+        <li>Xe giường nằm + gửi đồ chở ra trước + xe ôm ở bìa rừng.</li>
+        <li>Xe thồ vận chuyển vật dụng của đoàn (lều trại, túi ngủ, đồ ăn, nước uống…).</li>
+        <li>Tất cả các bữa ăn + BBQ + nước uống trong suốt hành trình.</li>
+        <li>Lều trại + cách nhiệt + túi ngủ cho mỗi cá nhân.</li>
+        <li>Dẫn đoàn + porter hỗ trợ cho đoàn.</li>
+      </ul>
+    </div>
+    <div class="callout reveal">
+      ⭕ <b>Tinh thần chuẩn bị:</b> Trải nghiệm trekking và tận hưởng cái đẹp, mệt quá nhớ la lên :))
+    </div>
+  </section>
+
+  <section class="wrap" id="chuanbi">
+    <div class="sec-head reveal">
+      <div class="sec-num">03 — Hành trang</div>
+      <h2>Chuẩn bị cá nhân</h2>
+      <p>Gọn nhẹ nhất có thể — mọi thứ bạn mang đều phải leo dốc cùng bạn.</p>
+    </div>
+    <div class="prep">
+      <div class="prep-item reveal">
+        <span class="ico">🌧️</span>
+        <h4>Áo mưa &amp; nước</h4>
+        <p>Mình sẽ phát áo mưa và 1.5L nước trước chuyến đi.</p>
+      </div>
+      <div class="prep-item reveal">
+        <span class="ico">👕</span>
+        <h4>2 bộ đồ</h4>
+        <p>1 bộ bỏ vào bịch nilong cột chặt để mưa khỏi ướt, tới điểm cắm trại thay; bộ còn lại để mai ra tắm.</p>
+      </div>
+      <div class="prep-item reveal">
+        <span class="ico">🔦</span>
+        <h4>Đèn pin &amp; sạc dự phòng</h4>
+        <p>Đèn pin không bắt buộc. Sạc dự phòng nếu dùng điện thoại nhiều.</p>
+      </div>
+      <div class="prep-item reveal">
+        <span class="ico">🥾</span>
+        <h4>Giày trekking</h4>
+        <p>Giày trekking hoặc dép tổ ong thần thánh.</p>
+      </div>
+      <div class="prep-item reveal">
+        <span class="ico">🍫</span>
+        <h4>Đồ ngọt tiếp sức</h4>
+        <p>Đi lần đầu và sợ mất sức thì nên đem ít bánh kẹo ngọt: socola, kẹo dẻo, xúc xích…</p>
+      </div>
+      <div class="prep-item reveal">
+        <span class="ico">🧴</span>
+        <h4>Chống nắng</h4>
+        <p>Kem chống nắng và nón.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="big">Hẹn gặp ở cột mốc 3 tỉnh 🏔️</span>
+    Tà Năng – Phan Dũng · 28/08 – 30/08
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 70 + 'ms';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
