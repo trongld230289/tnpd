@@ -104,6 +104,46 @@
     text-shadow:0 2px 12px rgba(0,0,0,.7)}
   .sec-num{text-shadow:0 2px 12px rgba(0,0,0,.7)}
 
+  /* ---------- Duong mon + nguoi trekking ---------- */
+  .trail{position:relative;padding-left:52px}
+  .trail-rail{
+    position:absolute;left:17px;top:14px;bottom:14px;width:3px;border-radius:3px;
+    background:rgba(255,255,255,.13);
+  }
+  .trail-fill{
+    position:absolute;left:0;top:0;width:100%;height:0;border-radius:3px;
+    background:linear-gradient(180deg,var(--moss),var(--moss-deep));
+    box-shadow:0 0 14px rgba(125,211,160,.55);
+  }
+  .trail-node{
+    position:absolute;left:50%;top:0;width:13px;height:13px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:#16241d;border:2px solid rgba(255,255,255,.22);
+    transition:background .35s ease,border-color .35s ease,box-shadow .35s ease;
+  }
+  .trail-node.hit{
+    background:var(--moss);border-color:var(--moss);
+    box-shadow:0 0 0 5px rgba(125,211,160,.18),0 0 16px rgba(125,211,160,.7);
+  }
+  .hiker{
+    position:absolute;left:50%;top:0;
+    width:34px;height:34px;margin:-17px 0 0 -17px;
+    display:grid;place-items:center;border-radius:50%;
+    font-size:1.15rem;line-height:1;
+    background:radial-gradient(circle at 50% 40%,rgba(125,211,160,.34),rgba(11,20,16,.9) 70%);
+    border:1px solid rgba(125,211,160,.55);
+    box-shadow:0 0 18px rgba(125,211,160,.45),0 6px 16px rgba(0,0,0,.6);
+    opacity:0;transition:opacity .4s ease;
+    will-change:transform;
+  }
+  .hiker.on{opacity:1}
+  .hiker span{display:block}
+  .hiker.walking span{animation:step .5s ease-in-out infinite}
+  @keyframes step{
+    0%,100%{transform:translateY(0) rotate(-5deg)}
+    50%{transform:translateY(-3px) rotate(5deg)}
+  }
+
   /* ---------- Timeline ---------- */
   .day{
     position:relative;margin-bottom:22px;border:1px solid var(--line);border-radius:20px;
@@ -216,6 +256,10 @@
     .chip{padding:9px 15px;font-size:.85rem}
     .scroll-cue{bottom:22px;gap:8px}
     .scroll-cue span.bar{height:34px}
+    .trail{padding-left:38px}
+    .trail-rail{left:13px;width:2px}
+    .hiker{width:28px;height:28px;margin:-14px 0 0 -14px;font-size:.98rem}
+    .trail-node{width:11px;height:11px}
   }
   /* man hinh thap: bo chi bao cuon de hero gon trong 1 khung */
   @media (max-width:620px) and (max-height:640px){
@@ -256,6 +300,12 @@
       <div class="sec-num">01 — Hành trình</div>
       <h2>Lịch trình chi tiết</h2>
     </div>
+
+    <div class="trail" id="trail">
+      <div class="trail-rail" id="trailRail">
+        <div class="trail-fill" id="trailFill"></div>
+        <div class="hiker" id="hiker" aria-hidden="true"><span>🚶</span></div>
+      </div>
 
     <article class="day reveal">
       <div class="day-head">
@@ -305,6 +355,7 @@
         <li><b>23h59</b> Có mặt Sài Gòn.</li>
       </ul>
     </article>
+    </div>
   </section>
 
   <section class="wrap" id="chiphi">
@@ -386,6 +437,87 @@
     el.style.transitionDelay = (i % 4) * 70 + 'ms';
     io.observe(el);
   });
+
+  /* ----- Nguoi trekking di doc duong mon theo scroll ----- */
+  (function () {
+    const trail = document.getElementById('trail');
+    const rail  = document.getElementById('trailRail');
+    const fill  = document.getElementById('trailFill');
+    const hiker = document.getElementById('hiker');
+    if (!trail || !rail || !fill || !hiker) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const days = [...trail.querySelectorAll('.day')];
+
+    // Moi ngay mot cot moc tren duong mon
+    const nodes = days.map(() => {
+      const n = document.createElement('span');
+      n.className = 'trail-node';
+      rail.appendChild(n);
+      return n;
+    });
+
+    let railH = 0, nodeAt = [];
+
+    function measure() {
+      railH = rail.offsetHeight;
+      // Dung offsetTop: khong bi transform cua .reveal lam lech
+      nodeAt = days.map((d, i) => {
+        const head = d.querySelector('.day-head');
+        const y = d.offsetTop + head.offsetTop + head.offsetHeight / 2 - rail.offsetTop;
+        nodes[i].style.top = y + 'px';
+        return y;
+      });
+    }
+
+    let walkTimer = null;
+    let lastP = -1;
+
+    function update() {
+      const r = trail.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      const inView = r.top < vh && r.bottom > 0;
+      hiker.classList.toggle('on', inView);
+      if (!inView) return;
+
+      // Diem ngam o 55% chieu cao man hinh
+      const focus = vh * 0.55;
+      let p = (focus - r.top) / Math.max(r.height, 1);
+      p = Math.max(0, Math.min(1, p));
+
+      const y = p * railH;
+      fill.style.height = y + 'px';
+      hiker.style.transform = 'translateY(' + y + 'px)';
+
+      nodes.forEach((n, i) => n.classList.toggle('hit', y >= nodeAt[i] - 2));
+
+      // Nhun chan khi dang di chuyen
+      if (!reduced && Math.abs(p - lastP) > 0.0004) {
+        hiker.classList.add('walking');
+        clearTimeout(walkTimer);
+        walkTimer = setTimeout(() => hiker.classList.remove('walking'), 220);
+      }
+      lastP = p;
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }
+
+    function onResize() { measure(); update(); }
+
+    measure();
+    update();
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onResize);
+    // Cac the .day hien dan qua .reveal nen kich thuoc co the doi sau khi load
+    if (window.ResizeObserver) new ResizeObserver(onResize).observe(trail);
+    addEventListener('load', onResize);
+  })();
 </script>
 </body>
 </html>
