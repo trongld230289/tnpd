@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trekking Tà Năng – Phan Dũng | 28/08 – 30/08</title>
-<meta name="description" content="Lịch trình trekking Tà Năng – Phan Dũng 3 ngày 2 đêm, xuất phát tối 28/08, về Sài Gòn 30/08. Cột mốc 3 tỉnh Lâm Đồng – Ninh Thuận – Bình Thuận.">
+<meta name="description" content="Lịch trình trekking Tà Năng – Phan Dũng 2 ngày 3 đêm, xuất phát tối 28/08, về Sài Gòn 30/08. Cột mốc 3 tỉnh Lâm Đồng – Ninh Thuận – Bình Thuận.">
 <meta name="theme-color" content="#0b1410">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +62,8 @@
     font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
     line-height:1.7;color:#e6f5ec;
   }
-  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 12px var(--moss)}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 12px var(--moss);flex-shrink:0}
+  .eyebrow .eb-txt{text-wrap:balance}
   h1{
     font-size:clamp(2.3rem,8.2vw,5rem);font-weight:800;line-height:1.14;
     letter-spacing:-.005em;text-transform:uppercase;padding-bottom:.08em;
@@ -132,6 +133,12 @@
   }
   ul.steps li b{color:#fff;font-weight:600;margin-right:6px}
   .note{color:var(--sun);font-style:italic}
+  .hl{
+    color:var(--sun);font-weight:600;
+    padding:2px 8px;border-radius:8px;
+    background:rgba(246,196,83,.14);border:1px solid rgba(246,196,83,.34);
+    white-space:nowrap;
+  }
 
   /* ---------- Price ---------- */
   .price-card{
@@ -155,6 +162,7 @@
     font-size:.93rem;font-weight:300;line-height:1.75;color:#e7efe9;
   }
   .includes li::before{content:'✓';color:var(--moss);font-weight:800;flex-shrink:0}
+  .includes li b{font-weight:600;color:var(--sun)}
 
   /* ---------- Prep ---------- */
   .prep{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
@@ -198,6 +206,25 @@
     .day-head .sub{margin-left:0;width:100%}
     ul.steps{padding:6px 18px 18px}
     .day-head{padding:18px 18px 16px}
+    /* chua cho .scroll-cue khoi de len chip ngay thang */
+    header.hero{padding:76px 0 124px}
+    .eyebrow{font-size:.68rem;letter-spacing:.14em;padding:7px 14px;margin-bottom:22px}
+    .lede{font-size:1rem;margin-top:22px}
+    .dates{margin-top:26px;gap:9px 10px}
+    .chip{padding:9px 15px;font-size:.85rem}
+    .scroll-cue{bottom:22px;gap:8px}
+    .scroll-cue span.bar{height:34px}
+  }
+  /* man hinh thap: bo chi bao cuon de hero gon trong 1 khung */
+  @media (max-width:620px) and (max-height:640px){
+    header.hero{padding:64px 0 56px}
+    .scroll-cue{display:none}
+  }
+  @media (max-width:380px){
+    .wrap{padding-left:16px;padding-right:16px}
+    .price-card{padding:28px 18px}
+    .includes li,.prep-item{padding:13px 14px}
+    .prep-item{padding:18px 16px}
   }
 </style>
 </head>
@@ -207,13 +234,13 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> Cung đường huyền thoại · 3 ngày 2 đêm</div>
+    <div class="eyebrow"><span class="dot"></span><span class="eb-txt">Cung đường huyền thoại · 2 ngày 3 đêm</span></div>
     <h1><span class="thin">Trekking</span>Tà Năng<br>Phan Dũng</h1>
     <p class="lede">Băng rừng, lội suối, chinh phục cột mốc 3 tỉnh Lâm Đồng – Ninh Thuận – Bình Thuận.</p>
     <div class="dates">
       <span class="chip">🚌 Xuất phát: Tối 28/08</span>
       <span class="chip">🏁 Về SG: 30/08</span>
-      <span class="chip hot">2.350.000 VNĐ / người</span>
+      <span class="chip hot">2.450.000 VNĐ / người</span>
     </div>
   </div>
   <div class="scroll-cue"><span>Lịch trình</span><span class="bar"></span></div>
@@ -224,7 +251,6 @@
     <div class="sec-head reveal">
       <div class="sec-num">01 — Hành trình</div>
       <h2>Lịch trình chi tiết</h2>
-      <p>Giờ giấc có thể xê dịch đôi chút tuỳ tình hình thời tiết và sức khoẻ của đoàn.</p>
     </div>
 
     <article class="day reveal">
@@ -271,7 +297,7 @@
         <li><b>10h–11h</b> Ăn nhẹ bên suối.</li>
         <li><b>11h</b> Xuất phát ra tới bìa rừng.</li>
         <li><b>13h</b> Xe ôm rước ở bìa rừng.</li>
-        <li><b>14h</b> Tắm suối — ăn trưa, no thì về.</li>
+        <li><b>14h</b> Tắm suối — <span class="hl">🦐 cơm trưa hải sản</span> chiêu đãi cả đoàn, no thì về.</li>
         <li><b>23h59</b> Có mặt Sài Gòn.</li>
       </ul>
     </article>
@@ -284,11 +310,11 @@
     </div>
     <div class="price-card reveal">
       <div class="price-label">Chi phí cho chuyến đi</div>
-      <div class="price">2.350.000<small>VNĐ / người</small></div>
+      <div class="price">2.450.000<small>VNĐ / người</small></div>
       <ul class="includes">
         <li>Xe giường nằm + gửi đồ chở ra trước + xe ôm ở bìa rừng.</li>
         <li>Xe thồ vận chuyển vật dụng của đoàn (lều trại, túi ngủ, đồ ăn, nước uống…).</li>
-        <li>Tất cả các bữa ăn + BBQ + nước uống trong suốt hành trình.</li>
+        <li><span>Tất cả các bữa ăn + BBQ + <b>cơm trưa hải sản ngày về</b> + <b>trái cây tươi</b>.</span></li>
         <li>Lều trại + cách nhiệt + túi ngủ cho mỗi cá nhân.</li>
         <li>Dẫn đoàn + porter hỗ trợ cho đoàn.</li>
       </ul>
