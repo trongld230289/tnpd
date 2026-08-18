@@ -32,24 +32,34 @@
   }
 
   /* ---------- Background: doi anh theo doan lich trinh ---------- */
-  .bg{
-    position:fixed;inset:0;z-index:-5;
-    background:url('assets/bg.jpg') center/cover no-repeat;
-    transform:scale(1.04);
-  }
-  /* Anh dem / anh sang chong len anh mac dinh, crossfade khi scroll */
-  .bg-alt{
-    position:fixed;inset:0;z-index:-4;opacity:0;
+  .bg,.bg-alt{
+    position:fixed;inset:0;
     background-position:center;background-size:cover;background-repeat:no-repeat;
     transform:scale(1.04);
+  }
+  .bg{z-index:-5}
+  /* Anh dem / anh sang chong len anh mac dinh, crossfade khi scroll */
+  .bg-alt{
+    z-index:-4;opacity:0;
     transition:opacity 1.3s ease;
+    will-change:opacity;
   }
   .bg-alt.on{opacity:1}
-  #bgNight{background-image:url('assets/night.jpg')}
-  #bgDay{background-image:url('assets/morning.jpg')}
-  @media (max-width:700px){
-    #bgNight{background-image:url('assets/night-sm.jpg')}
-    #bgDay{background-image:url('assets/morning-sm.jpg')}
+  /* Dong url() la du phong cho trinh duyet chua ho tro image-set */
+  .bg      {background-image:url('assets/bg.jpg')}
+  #bgNight {background-image:url('assets/night.jpg')}
+  #bgDay   {background-image:url('assets/morning.jpg')}
+  .bg      {background-image:image-set(url('assets/bg.webp') type('image/webp'), url('assets/bg.jpg') type('image/jpeg'))}
+  #bgNight {background-image:image-set(url('assets/night.webp') type('image/webp'), url('assets/night.jpg') type('image/jpeg'))}
+  #bgDay   {background-image:image-set(url('assets/morning.webp') type('image/webp'), url('assets/morning.jpg') type('image/jpeg'))}
+  /* Man hinh nho dung ban 1024px cho nhe may */
+  @media (max-width:820px){
+    .bg      {background-image:url('assets/bg-sm.jpg')}
+    #bgNight {background-image:url('assets/night-sm.jpg')}
+    #bgDay   {background-image:url('assets/morning-sm.jpg')}
+    .bg      {background-image:image-set(url('assets/bg-sm.webp') type('image/webp'), url('assets/bg-sm.jpg') type('image/jpeg'))}
+    #bgNight {background-image:image-set(url('assets/night-sm.webp') type('image/webp'), url('assets/night-sm.jpg') type('image/jpeg'))}
+    #bgDay   {background-image:image-set(url('assets/morning-sm.webp') type('image/webp'), url('assets/morning-sm.jpg') type('image/jpeg'))}
   }
   /* Anh buoi sang sang hon anh goc, phu them mot lop mong cho chu khoi chim */
   #bgDay::after{content:'';position:absolute;inset:0;background:rgba(11,20,16,.20)}
@@ -87,20 +97,17 @@
   }
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* Mua nhe */
-  .wx-rain{background:linear-gradient(180deg, rgba(26,44,56,.18), rgba(10,20,26,.28))}
+  /* Mua nhe. Chay bang transform thay vi background-position de GPU lo,
+     bo filter blur va bot con 1 lop cho do lag */
+  .wx-rain{background:linear-gradient(180deg, rgba(26,44,56,.16), rgba(10,20,26,.26))}
   .wx-rain .drops{
-    position:absolute;inset:-12% -12%;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cg stroke='%23dff0ff' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.30'%3E%3Cline x1='16' y1='6' x2='13' y2='23'/%3E%3Cline x1='44' y1='58' x2='41' y2='73'/%3E%3Cline x1='71' y1='20' x2='68' y2='39'/%3E%3Cline x1='97' y1='104' x2='94' y2='120'/%3E%3Cline x1='124' y1='44' x2='121' y2='61'/%3E%3Cline x1='151' y1='84' x2='148' y2='99'/%3E%3Cline x1='30' y1='120' x2='27' y2='138'/%3E%3Cline x1='58' y1='142' x2='55' y2='157'/%3E%3Cline x1='86' y1='150' x2='83' y2='166'/%3E%3Cline x1='112' y1='6' x2='109' y2='21'/%3E%3Cline x1='139' y1='128' x2='136' y2='146'/%3E%3Cline x1='6' y1='72' x2='3' y2='88'/%3E%3C/g%3E%3C/svg%3E");
-    filter:blur(.4px);
-    animation:rainfall 1.15s linear infinite;
+    position:absolute;left:-5%;right:-5%;top:-220px;bottom:-220px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cg stroke='%23dff0ff' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.24'%3E%3Cline x1='16' y1='6' x2='13' y2='23'/%3E%3Cline x1='71' y1='20' x2='68' y2='39'/%3E%3Cline x1='124' y1='44' x2='121' y2='61'/%3E%3Cline x1='44' y1='58' x2='41' y2='73'/%3E%3Cline x1='151' y1='90' x2='148' y2='105'/%3E%3Cline x1='97' y1='104' x2='94' y2='120'/%3E%3Cline x1='30' y1='124' x2='27' y2='140'/%3E%3Cline x1='86' y1='148' x2='83' y2='164'/%3E%3C/g%3E%3C/svg%3E");
+    animation:rainfall 1.5s linear infinite;
+    will-change:transform;
   }
-  .wx-rain .drops.d2{
-    opacity:.45;background-size:260px 260px;
-    animation-name:rainfall2;animation-duration:1.9s;
-  }
-  @keyframes rainfall{from{background-position:0 0}to{background-position:0 170px}}
-  @keyframes rainfall2{from{background-position:0 0}to{background-position:0 260px}}
+  /* Tile cao 170px nen dich dung 170px la khop lien mach */
+  @keyframes rainfall{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,170px,0)}}
 
   /* May bay */
   .wx-cloud{background:linear-gradient(180deg, rgba(178,200,218,.20), rgba(22,34,42,.20))}
@@ -140,6 +147,14 @@
   .wx-front i:nth-child(1){width:88vw;height:12vh;top:38%;opacity:.30;animation-duration:30s}
   .wx-front i:nth-child(2){width:66vw;height:9vh;top:62%;opacity:.24;animation-duration:44s;animation-delay:-17s}
   .wx-front i:nth-child(3){width:54vw;height:7vh;top:86%;opacity:.20;animation-duration:36s;animation-delay:-25s}
+
+  /* Dien thoai: bot dam may va giam blur, moi lop blur lon la mot luot nang */
+  @media (max-width:820px){
+    .wx-cloud i:nth-child(4),.wx-cloud i:nth-child(5),
+    .wx-front i:nth-child(3){display:none}
+    .wx-cloud i{filter:blur(11px)}
+    .wx-front i{filter:blur(20px)}
+  }
 
   @media (prefers-reduced-motion:reduce){
     .wx *,.wx-front i{animation:none!important}
@@ -385,7 +400,7 @@
 <div class="bg-shade" id="bgShade" aria-hidden="true"></div>
 <div class="weather" id="weather" aria-hidden="true">
   <div class="wx wx-sun" id="wxSun"><span class="rays"></span></div>
-  <div class="wx wx-rain" id="wxRain"><span class="drops"></span><span class="drops d2"></span></div>
+  <div class="wx wx-rain" id="wxRain"><span class="drops"></span></div>
   <div class="wx wx-cloud" id="wxCloud"><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 <div class="wx-front" id="wxFront" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -590,9 +605,11 @@
 
     // Tai san 2 anh nen khi trang da on dinh, tranh giat khi doi canh
     function preloadScenes() {
-      const small = window.matchMedia('(max-width:700px)').matches;
+      const small = window.matchMedia('(max-width:820px)').matches;
+      const webp = document.createElement('canvas')
+        .toDataURL('image/webp').indexOf('data:image/webp') === 0;
       ['night', 'morning'].forEach(n => {
-        new Image().src = 'assets/' + n + (small ? '-sm' : '') + '.jpg';
+        new Image().src = 'assets/' + n + (small ? '-sm' : '') + (webp ? '.webp' : '.jpg');
       });
     }
 
