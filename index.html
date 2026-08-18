@@ -617,6 +617,14 @@
       });
     }
 
+    // Tien do 0 -> 1 trong pham vi cua rieng mot ngay
+    function localOf(y, i) {
+      const from = nodeAt[i];
+      const to = (i + 1 < nodeAt.length) ? nodeAt[i + 1] : railH;
+      if (!(to > from)) return 0;
+      return Math.max(0, Math.min(1, (y - from) / (to - from)));
+    }
+
     let walkTimer = null;
     let lastP = -1;
 
@@ -649,21 +657,21 @@
       let active = -1;
       for (let i = 0; i < nodeAt.length; i++) if (y >= nodeAt[i] - 2) active = i;
 
-      if (active <= 0) {
-        // Ngay 0 la buoi toi: anh troi sao, khong phu hieu ung thoi tiet
-        setScene(active === 0 ? 'night' : null);
+      if (active < 0) {
+        setScene(null);
         setWeather(null);
+      } else if (active === 0) {
+        // Ngay 0 - toi thu 6, di xe dem: anh troi sao, troi quang
+        setScene('night');
+        setWeather(null);
+      } else if (active === 1) {
+        // Ngay 1 - het thu 7 van giu anh dem (toi nay cam trai), nua sau do mua
+        setScene('night');
+        setWeather(localOf(y, 1) < 0.45 ? null : 'rain');
       } else {
+        // Ngay 2 - chu nhat: doi sang anh cuoi, binh minh roi may la la
         setScene('day');
-        if (active === 1) {
-          // Ngay 1: sang nang, chieu do mua
-          const span = nodeAt[2] - nodeAt[1];
-          const local = span > 0 ? (y - nodeAt[1]) / span : 0;
-          setWeather(local < 0.5 ? 'sun' : 'rain');
-        } else {
-          // Ngay 2: sang som, may la la tren bien may
-          setWeather('cloud');
-        }
+        setWeather(localOf(y, 2) < 0.45 ? 'sun' : 'cloud');
       }
 
       // Nhun chan khi dang di chuyen
